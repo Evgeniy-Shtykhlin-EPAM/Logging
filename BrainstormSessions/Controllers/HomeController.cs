@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using BrainstormSessions.ViewModels;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -14,13 +16,12 @@ namespace BrainstormSessions.Controllers
     public class HomeController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
-        //private readonly ILogger<HomeController> _logger;
+        private static  readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
 
-        public HomeController(IBrainstormSessionRepository sessionRepository/*, ILogger<HomeController> logger*/)
+        public HomeController(IBrainstormSessionRepository sessionRepository)
         {
             _sessionRepository = sessionRepository;
-            //_logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -35,7 +36,7 @@ namespace BrainstormSessions.Controllers
                 IdeaCount = session.Ideas.Count
             });
             Log.Information("Expected Info messages in the logs");
-
+            log.Info("Expected Info messages in the logs");
 
             return View(model);
         }
@@ -51,6 +52,8 @@ namespace BrainstormSessions.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Log.Warning("Expected Warn messages in the logs");
+                log.Warn("Expected Warn messages in the logs");
                 return BadRequest(ModelState);
             }
             else
@@ -60,7 +63,6 @@ namespace BrainstormSessions.Controllers
                     DateCreated = DateTimeOffset.Now,
                     Name = model.SessionName
                 });
-                Log.Warning("Expected Warn messages in the logs");
             }
 
             return RedirectToAction(actionName: nameof(Index));

@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Formatting.Json;
@@ -10,8 +11,13 @@ namespace BrainstormSessions
     {
         public static int Main(string[] args)
         {
+            var configuration= new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File(new JsonFormatter(),@"c:\temp\logs.log",shared: true)
+                .ReadFrom.Configuration(configuration)
+                //.WriteTo.File(new JsonFormatter(),@"c:\temp\logs.log",shared: true)
                 .CreateLogger();
 
             try

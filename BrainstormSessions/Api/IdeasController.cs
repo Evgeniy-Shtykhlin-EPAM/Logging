@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using BrainstormSessions.ClientModels;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -13,6 +15,8 @@ namespace BrainstormSessions.Api
     public class IdeasController : ControllerBase
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
 
         public IdeasController(IBrainstormSessionRepository sessionRepository)
         {
@@ -102,6 +106,9 @@ namespace BrainstormSessions.Api
         {
             if (!ModelState.IsValid)
             {
+                Log.Error("Expected Error messages in the logs");
+                log.Error("Expected Error messages in the logs");
+
                 return BadRequest(ModelState);
             }
 
@@ -109,7 +116,6 @@ namespace BrainstormSessions.Api
 
             if (session == null)
             {
-                Log.Error("Expected Error messages in the logs");
 
                 return NotFound(model.SessionId);
             }

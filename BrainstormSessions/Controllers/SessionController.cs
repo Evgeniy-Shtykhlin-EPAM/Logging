@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Reflection;
+using System.Threading.Tasks;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.ViewModels;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -9,6 +11,8 @@ namespace BrainstormSessions.Controllers
     public class SessionController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
 
         public SessionController(IBrainstormSessionRepository sessionRepository)
         {
@@ -26,10 +30,11 @@ namespace BrainstormSessions.Controllers
             var session = await _sessionRepository.GetByIdAsync(id.Value);
             if (session == null)
             {
-                Log.Debug("Expected 2 Debug messages in the logs");
-
                 return Content("Session not found.");
             }
+            Log.Debug("Expected 2 Debug messages in the logs");
+            log.Debug("Expected 2 Debug messages in the logs");
+
 
             var viewModel = new StormSessionViewModel()
             {
@@ -38,7 +43,7 @@ namespace BrainstormSessions.Controllers
                 Id = session.Id
             };
             Log.Debug("Expected 2 Debug messages in the logs");
-
+            log.Debug("Expected 2 Debug messages in the logs");
 
             return View(viewModel);
         }
