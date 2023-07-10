@@ -3,13 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Formatting.Json;
 
 namespace BrainstormSessions
 {
     public class Program
     {
-        public static int Main(string[] args)
+        public static void Main(string[] args)
         {
             var configuration= new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
@@ -25,14 +24,12 @@ namespace BrainstormSessions
                 Log.Information("Starting web application");
 
                 CreateHostBuilder(args).Build().Run();
-
-                return 0;
             }
             catch (Exception ex)
             {
                 Log.Fatal(ex, "Application terminated unexpectedly");
-                return 1;
             }
+
             finally
             {
                 Log.CloseAndFlush();

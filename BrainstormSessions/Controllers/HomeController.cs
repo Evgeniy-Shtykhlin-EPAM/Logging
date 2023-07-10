@@ -8,7 +8,6 @@ using BrainstormSessions.Core.Model;
 using BrainstormSessions.ViewModels;
 using log4net;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace BrainstormSessions.Controllers
