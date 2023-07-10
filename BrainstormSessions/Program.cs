@@ -12,8 +12,6 @@ namespace BrainstormSessions
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File(new JsonFormatter(),@"c:\temp\logs.log",shared: true)
-                //.WriteTo.Console()
-
                 .CreateLogger();
 
             try
