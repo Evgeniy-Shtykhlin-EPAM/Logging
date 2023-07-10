@@ -6,6 +6,7 @@ using BrainstormSessions.ClientModels;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace BrainstormSessions.Api
 {
@@ -108,6 +109,8 @@ namespace BrainstormSessions.Api
 
             if (session == null)
             {
+                Log.Error("Expected Error messages in the logs");
+
                 return NotFound(model.SessionId);
             }
 

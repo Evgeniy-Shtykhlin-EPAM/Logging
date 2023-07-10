@@ -6,16 +6,21 @@ using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using BrainstormSessions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace BrainstormSessions.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        //private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IBrainstormSessionRepository sessionRepository)
+
+        public HomeController(IBrainstormSessionRepository sessionRepository/*, ILogger<HomeController> logger*/)
         {
             _sessionRepository = sessionRepository;
+            //_logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -29,6 +34,8 @@ namespace BrainstormSessions.Controllers
                 Name = session.Name,
                 IdeaCount = session.Ideas.Count
             });
+            Log.Information("Expected Info messages in the logs");
+
 
             return View(model);
         }
@@ -53,6 +60,7 @@ namespace BrainstormSessions.Controllers
                     DateCreated = DateTimeOffset.Now,
                     Name = model.SessionName
                 });
+                Log.Warning("Expected Warn messages in the logs");
             }
 
             return RedirectToAction(actionName: nameof(Index));
