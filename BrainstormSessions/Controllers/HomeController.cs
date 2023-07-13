@@ -35,6 +35,7 @@ namespace BrainstormSessions.Controllers
                 IdeaCount = session.Ideas.Count
             });
             Log.Information("Expected Info messages in the logs");
+
             log.Info("Expected Info messages in the logs");
 
             return View(model);

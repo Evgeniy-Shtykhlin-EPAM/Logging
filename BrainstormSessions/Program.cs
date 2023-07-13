@@ -23,13 +23,13 @@ namespace BrainstormSessions
                 .WriteTo.File(new JsonFormatter(),@"c:\temp\logs.log",shared: true)
                 .WriteTo.Email(new EmailConnectionInfo
                 {
-                    FromEmail = "from",
-                    ToEmail = "to",
+                    FromEmail = "from@mail.ru",
+                    ToEmail = "to@epam.com",
                     MailServer = "smtp.mail.ru",
                     NetworkCredentials = new NetworkCredential
                     {
-                        UserName = "UserName@mail.ru",
-                        Password = "password"
+                        UserName = "from@mail.ru",
+                        Password = "-"
                     },
                     EnableSsl = true,
                     Port = 465,
